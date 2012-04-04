@@ -1,0 +1,20 @@
+﻿<xapCache source="F:\Jayway_Projects\JNotes\JNotes\Bin\Debug\JNotes.xap" wasSigned="False" certificateThumbprint="" TimeStampUrl="" lastWriteTime="2012-04-03 17:05:29">
+  <file source="F:\Jayway_Projects\JNotes\JNotes\obj\Debug\JNotes.dll" archivePath="JNotes.dll" lastWriteTime="2012-04-03 17:05:28" />
+  <file source="C:\Program\Blend\Silverlight\v4.0\Libraries\Microsoft.Expression.Interactions.dll" archivePath="Microsoft.Expression.Interactions.dll" lastWriteTime="2010-05-25 18:59:20" />
+  <file source="F:\Jayway_Projects\JNotes\packages\reactiveui-xaml.2.5.2.0\lib\SL4\ReactiveUI.Blend_SL4.dll" archivePath="ReactiveUI.Blend_SL4.dll" lastWriteTime="2012-04-01 18:48:57" />
+  <file source="F:\Jayway_Projects\JNotes\packages\reactiveui-xaml.2.5.2.0\lib\SL4\ReactiveUI.Xaml_SL4.dll" archivePath="ReactiveUI.Xaml_SL4.dll" lastWriteTime="2012-04-01 18:48:57" />
+  <file source="F:\Jayway_Projects\JNotes\packages\reactiveui-core.2.5.2.0\lib\SL4\ReactiveUI_SL4.dll" archivePath="ReactiveUI_SL4.dll" lastWriteTime="2012-04-01 18:48:57" />
+  <file source="c:\Program Files (x86)\Microsoft SDKs\Silverlight\v4.0\Libraries\Client\System.ComponentModel.DataAnnotations.dll" archivePath="System.ComponentModel.DataAnnotations.dll" lastWriteTime="2011-03-10 00:08:16" />
+  <file source="F:\Jayway_Projects\JNotes\packages\Rx_Experimental-Main.1.1.11111\lib\SL4\System.Reactive.dll" archivePath="System.Reactive.dll" lastWriteTime="2012-04-01 18:48:56" />
+  <file source="F:\Jayway_Projects\JNotes\packages\Rx_Experimental-Xaml.1.1.11111\lib\SL4\System.Reactive.Windows.Threading.dll" archivePath="System.Reactive.Windows.Threading.dll" lastWriteTime="2012-04-01 18:48:57" />
+  <file source="c:\Program Files (x86)\Microsoft SDKs\RIA Services\v1.0\Libraries\Silverlight\System.ServiceModel.DomainServices.Client.dll" archivePath="System.ServiceModel.DomainServices.Client.dll" lastWriteTime="2011-09-09 22:23:30" />
+  <file source="c:\Program Files (x86)\Microsoft SDKs\RIA Services\v1.0\Libraries\Silverlight\System.ServiceModel.DomainServices.Client.Web.dll" archivePath="System.ServiceModel.DomainServices.Client.Web.dll" lastWriteTime="2011-09-09 22:23:32" />
+  <file source="c:\Program Files (x86)\Microsoft SDKs\Silverlight\v4.0\Libraries\Client\System.ServiceModel.Web.Extensions.dll" archivePath="System.ServiceModel.Web.Extensions.dll" lastWriteTime="2011-03-10 00:08:16" />
+  <file source="F:\Jayway_Projects\JNotes\JNotes\Libs\System.Windows.Controls.Data.DataForm.Toolkit.dll" archivePath="System.Windows.Controls.Data.DataForm.Toolkit.dll" lastWriteTime="2012-04-01 17:51:29" />
+  <file source="c:\Program Files (x86)\Microsoft SDKs\Silverlight\v4.0\Libraries\Client\System.Windows.Controls.Data.Input.dll" archivePath="System.Windows.Controls.Data.Input.dll" lastWriteTime="2011-03-10 00:08:16" />
+  <file source="c:\Program Files (x86)\Microsoft SDKs\Silverlight\v4.0\Libraries\Client\System.Windows.Controls.dll" archivePath="System.Windows.Controls.dll" lastWriteTime="2011-03-10 00:08:16" />
+  <file source="c:\Program Files (x86)\Microsoft SDKs\Silverlight\v4.0\Libraries\Client\System.Windows.Controls.Navigation.dll" archivePath="System.Windows.Controls.Navigation.dll" lastWriteTime="2011-03-10 00:08:16" />
+  <file source="C:\Program\Blend\Silverlight\v4.0\Libraries\System.Windows.Interactivity.dll" archivePath="System.Windows.Interactivity.dll" lastWriteTime="2010-05-25 18:59:20" />
+  <file source="c:\Program Files (x86)\Microsoft SDKs\Silverlight\v4.0\Libraries\Client\System.Windows.Data.dll" archivePath="System.Windows.Data.dll" lastWriteTime="2011-03-10 00:08:16" />
+  <file source="F:\Jayway_Projects\JNotes\JNotes\Bin\Debug\AppManifest.xaml" archivePath="AppManifest.xaml" lastWriteTime="2012-04-02 15:10:35" />
+</xapCache>

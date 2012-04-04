@@ -1,0 +1,3 @@
+F:\Jayway_Projects\JNotes\JNotes
+Generated_Code\JNotes.Web.g.cs
+Generated_Code\Models\Shared\User.shared.cs

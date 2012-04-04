@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="TreeModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+  <EntityContainer Name="TreeModelStoreContainer">
+    <EntitySet Name="TreeData" EntityType="TreeModel.Store.TreeData" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_TreeData_TreeData" Association="TreeModel.Store.FK_TreeData_TreeData">
+      <End Role="TreeData" EntitySet="TreeData" />
+      <End Role="TreeData1" EntitySet="TreeData" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="TreeData">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Parent" Type="uniqueidentifier" />
+    <Property Name="Title" Type="varchar" MaxLength="255" />
+    <Property Name="Text" Type="varchar(max)" />
+    <Property Name="Sortorder" Type="int" />
+    <Property Name="isExpanded" Type="bit" />
+  </EntityType>
+  <Association Name="FK_TreeData_TreeData">
+    <End Role="TreeData" Type="TreeModel.Store.TreeData" Multiplicity="0..1" />
+    <End Role="TreeData1" Type="TreeModel.Store.TreeData" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TreeData">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TreeData1">
+        <PropertyRef Name="Parent" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

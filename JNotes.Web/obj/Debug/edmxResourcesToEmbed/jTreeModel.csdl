@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="jTreeModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+  <EntityContainer Name="jTreeEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="TreeData" EntityType="jTreeModel.TreeData" />
+    <AssociationSet Name="FK_TreeData_TreeData" Association="jTreeModel.FK_TreeData_TreeData">
+      <End Role="TreeData" EntitySet="TreeData" />
+      <End Role="TreeData1" EntitySet="TreeData" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="TreeData">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Guid" Nullable="false" />
+    <Property Name="Parent" Type="Guid" />
+    <Property Name="Title" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
+    <Property Name="Text" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+    <Property Name="Sortorder" Type="Int32" />
+    <Property Name="isExpanded" Type="Boolean" />
+    <NavigationProperty Name="TreeData1" Relationship="jTreeModel.FK_TreeData_TreeData" FromRole="TreeData" ToRole="TreeData1" />
+    <NavigationProperty Name="TreeData2" Relationship="jTreeModel.FK_TreeData_TreeData" FromRole="TreeData1" ToRole="TreeData" />
+  </EntityType>
+  <Association Name="FK_TreeData_TreeData">
+    <End Role="TreeData" Type="jTreeModel.TreeData" Multiplicity="0..1" />
+    <End Role="TreeData1" Type="jTreeModel.TreeData" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TreeData">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TreeData1">
+        <PropertyRef Name="Parent" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

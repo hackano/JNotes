@@ -1,0 +1,61 @@
+﻿<UserControl 
+  x:Class="JNotes.MainPage"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:navigation="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Navigation" 
+  xmlns:uriMapper="clr-namespace:System.Windows.Navigation;assembly=System.Windows.Controls.Navigation"
+  xmlns:dataControls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Data.DataForm.Toolkit" 
+  xmlns:login="clr-namespace:JNotes.LoginUI"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+  mc:Ignorable="d" d:DesignWidth="640" d:DesignHeight="480" Background="Black">
+
+  <Grid x:Name="LayoutRoot" Style="{StaticResource LayoutRootGridStyle}">
+
+    <Border x:Name="ContentBorder" Style="{StaticResource ContentBorderStyle}" Margin="0">
+            <navigation:Frame x:Name="ContentFrame" Style="{StaticResource ContentFrameStyle}" 
+                              Source="/TreeViewPage" Navigated="ContentFrame_Navigated" NavigationFailed="ContentFrame_NavigationFailed">
+                <navigation:Frame.UriMapper>
+                  <uriMapper:UriMapper>
+                    <uriMapper:UriMapping Uri="" MappedUri="/Views/TreeViewPage.xaml"/>
+                    <uriMapper:UriMapping Uri="/{pageName}" MappedUri="/Views/{pageName}.xaml"/>
+                  </uriMapper:UriMapper>
+                </navigation:Frame.UriMapper>
+            </navigation:Frame>
+    </Border>
+
+    <Grid Style="{StaticResource NavigationOuterGridStyle}">
+      <Grid x:Name="NavigationGrid" Style="{StaticResource NavigationGridStyle}" Visibility="Collapsed">
+
+        <Border x:Name="BrandingBorder" Style="{StaticResource BrandingBorderStyle}">
+          <StackPanel x:Name="BrandingStackPanel" Style="{StaticResource BrandingStackPanelStyle}"/>
+        </Border>
+
+        <Border x:Name="LinksBorder" Style="{StaticResource LinksBorderStyle}" Visibility="Collapsed">
+          <StackPanel x:Name="LinksStackPanel" Style="{StaticResource LinksStackPanelStyle}">
+						<HyperlinkButton x:Name="LinkTreeView" Style="{StaticResource LinkStyle}" TargetName="ContentFrame" Content="{Binding Path=Strings.TreeViewPageTitle, Source={StaticResource ApplicationResources}}">
+							<HyperlinkButton.NavigateUri>/TreeViewPage</HyperlinkButton.NavigateUri>
+						</HyperlinkButton>
+
+          	<Rectangle Style="{StaticResource DividerStyle}"/>
+
+						<HyperlinkButton x:Name="Link1" Style="{StaticResource LinkStyle}" 
+                                     NavigateUri="/Home" TargetName="ContentFrame" Content="{Binding Path=Strings.HomePageTitle, Source={StaticResource ApplicationResources}}"/>
+
+            <Rectangle x:Name="Divider1" Style="{StaticResource DividerStyle}"/>
+
+            <HyperlinkButton x:Name="Link2" Style="{StaticResource LinkStyle}" 
+                                     NavigateUri="/About" TargetName="ContentFrame" Content="{Binding Path=Strings.AboutPageTitle, Source={StaticResource ApplicationResources}}"/>
+
+          </StackPanel>
+        </Border>
+
+      </Grid>
+
+      <Border Style="{StaticResource LoginContainerStyle}" Visibility="Collapsed">
+          <login:LoginStatus/>           
+      </Border>
+    </Grid>
+
+  </Grid>
+
+</UserControl>

@@ -1,0 +1,409 @@
+﻿	
+<sdk:Page xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+xmlns:navigation="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Navigation"
+xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
+xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+xmlns:System="clr-namespace:System;assembly=mscorlib" 
+xmlns:JNotes="clr-namespace:JNotes"
+xmlns:vm="clr-namespace:JNotes.ViewModels"
+x:Class="JNotes.Views.TreeViewPage"
+                 Title="Tree Nodes"
+                 mc:Ignorable="d"
+                 d:DesignHeight="480"
+                 d:DesignWidth="640"
+                 >
+	<sdk:Page.Resources>
+			
+    <vm:TreeVm x:Key="TreeVm"/>
+	
+		<DataTemplate x:Key="treeViewItemTemplate">
+			<TextBlock Text="{Binding Title}" />
+		</DataTemplate>
+		<ControlTemplate x:Key="CommonValidationToolTipTemplate" TargetType="ToolTip">
+			<Grid x:Name="Root" Margin="5,0" Opacity="0" RenderTransformOrigin="0,0">
+				<Grid.RenderTransform>
+					<TranslateTransform x:Name="Translation" X="-25"/>
+				</Grid.RenderTransform>
+				<VisualStateManager.VisualStateGroups>
+					<VisualStateGroup x:Name="OpenStates">
+						<VisualStateGroup.Transitions>
+							<VisualTransition GeneratedDuration="0"/>
+							<VisualTransition GeneratedDuration="0:0:0.2" To="Open">
+								<Storyboard>
+									<DoubleAnimation Duration="0:0:0.2" To="0" Storyboard.TargetProperty="X" Storyboard.TargetName="Translation">
+										<DoubleAnimation.EasingFunction>
+											<BackEase Amplitude=".3" EasingMode="EaseOut"/>
+										</DoubleAnimation.EasingFunction>
+									</DoubleAnimation>
+									<DoubleAnimation Duration="0:0:0.2" To="1" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="Root"/>
+								</Storyboard>
+							</VisualTransition>
+						</VisualStateGroup.Transitions>
+						<VisualState x:Name="Closed">
+							<Storyboard>
+								<DoubleAnimation Duration="0" To="0" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="Root"/>
+							</Storyboard>
+						</VisualState>
+						<VisualState x:Name="Open">
+							<Storyboard>
+								<DoubleAnimation Duration="0" To="0" Storyboard.TargetProperty="X" Storyboard.TargetName="Translation"/>
+								<DoubleAnimation Duration="0" To="1" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="Root"/>
+							</Storyboard>
+						</VisualState>
+					</VisualStateGroup>
+				</VisualStateManager.VisualStateGroups>
+				<Border Background="#052A2E31" CornerRadius="5" Margin="4,4,-4,-4"/>
+				<Border Background="#152A2E31" CornerRadius="4" Margin="3,3,-3,-3"/>
+				<Border Background="#252A2E31" CornerRadius="3" Margin="2,2,-2,-2"/>
+				<Border Background="#352A2E31" CornerRadius="2" Margin="1,1,-1,-1"/>
+				<Border Background="#FFDC000C" CornerRadius="2">
+					<TextBlock Foreground="White" MaxWidth="250" Margin="8,4,8,4" TextWrapping="Wrap" Text="{Binding (Validation.Errors)[0].ErrorContent}" UseLayoutRounding="false"/>
+				</Border>
+			</Grid>
+		</ControlTemplate>
+		<Style x:Key="TreeViewItemControlTemplate" TargetType="sdk:TreeViewItem">
+			<Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
+			<Setter Property="Padding" Value="3"/>
+			<Setter Property="HorizontalContentAlignment" Value="Left"/>
+			<Setter Property="VerticalContentAlignment" Value="Top"/>
+			<Setter Property="Background" Value="Transparent"/>
+			<Setter Property="BorderThickness" Value="1"/>
+			<Setter Property="Cursor" Value="Arrow"/>
+			<Setter Property="IsTabStop" Value="True"/>
+			<Setter Property="TabNavigation" Value="Once"/>
+			<Setter Property="Margin" Value="0 1 0 0"/>
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="sdk:TreeViewItem">
+						<Grid x:Name="grid" Background="{x:Null}">
+							
+					  <i:Interaction.Triggers>
+						<ei:DataTrigger Binding="{Binding Title}" Value="[~Removed]"  >
+						<ei:GoToStateAction StateName="Removed" />
+						</ei:DataTrigger>
+						</i:Interaction.Triggers>
+							
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="15"/>
+								<ColumnDefinition />
+								<ColumnDefinition />
+								<ColumnDefinition Width="Auto"/>
+							</Grid.ColumnDefinitions>
+							<Grid.RowDefinitions>
+								<RowDefinition Height="Auto"/>
+								<RowDefinition Height="*"/>
+							</Grid.RowDefinitions>
+							<VisualStateManager.VisualStateGroups>
+								<VisualStateGroup x:Name="CommonStates">
+									<VisualState x:Name="Normal"/>
+									<VisualState x:Name="MouseOver"/>
+									<VisualState x:Name="Pressed"/>
+									<VisualState x:Name="Disabled">
+										<Storyboard>
+											<ObjectAnimationUsingKeyFrames Duration="0" Storyboard.TargetProperty="Foreground" Storyboard.TargetName="Header">
+												<DiscreteObjectKeyFrame KeyTime="0">
+													<DiscreteObjectKeyFrame.Value>
+														<SolidColorBrush Color="#FF999999"/>
+													</DiscreteObjectKeyFrame.Value>
+												</DiscreteObjectKeyFrame>
+											</ObjectAnimationUsingKeyFrames>
+										</Storyboard>
+									</VisualState>
+								</VisualStateGroup>
+								<VisualStateGroup x:Name="SelectionStates">
+									<VisualState x:Name="Unselected"/>
+									<VisualState x:Name="Selected">
+										<Storyboard>
+											<DoubleAnimation Duration="0" To=".75" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="Selection"/>
+										</Storyboard>
+									</VisualState>
+									<VisualState x:Name="SelectedInactive">
+										<Storyboard>
+											<DoubleAnimation Duration="0" To=".2" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="Selection"/>
+											<ColorAnimation Duration="0" To="#FF999999" Storyboard.TargetProperty="Color" Storyboard.TargetName="SelectionFill"/>
+											<ColorAnimation Duration="0" To="#FF333333" Storyboard.TargetProperty="Color" Storyboard.TargetName="SelectionStroke"/>
+										</Storyboard>
+									</VisualState>
+								</VisualStateGroup>
+								<VisualStateGroup x:Name="HasItemsStates">
+									<VisualState x:Name="HasItems">
+										<Storyboard>
+											<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="btnDElete">
+												<DiscreteObjectKeyFrame KeyTime="0">
+													<DiscreteObjectKeyFrame.Value>
+														<Visibility>Collapsed</Visibility>
+													</DiscreteObjectKeyFrame.Value>
+												</DiscreteObjectKeyFrame>
+											</ObjectAnimationUsingKeyFrames>
+										</Storyboard>
+									</VisualState>
+									<VisualState x:Name="NoItems">
+										<Storyboard>
+											<ObjectAnimationUsingKeyFrames Duration="0" Storyboard.TargetProperty="Visibility" Storyboard.TargetName="ExpanderButton">
+												<DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed"/>
+											</ObjectAnimationUsingKeyFrames>
+										</Storyboard>
+									</VisualState>
+								</VisualStateGroup>
+								<VisualStateGroup x:Name="ExpansionStates">
+									<VisualState x:Name="Collapsed"/>
+									<VisualState x:Name="Expanded">
+										<Storyboard>
+											<ObjectAnimationUsingKeyFrames Duration="0" Storyboard.TargetProperty="Visibility" Storyboard.TargetName="ItemsHost">
+												<DiscreteObjectKeyFrame KeyTime="0" Value="Visible"/>
+											</ObjectAnimationUsingKeyFrames>
+										</Storyboard>
+									</VisualState>
+								</VisualStateGroup>
+								<VisualStateGroup x:Name="ValidationStates">
+									<VisualState x:Name="Valid"/>
+									<VisualState x:Name="InvalidUnfocused">
+										<Storyboard>
+											<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility" Storyboard.TargetName="Validation">
+												<DiscreteObjectKeyFrame KeyTime="0" Value="Visible"/>
+											</ObjectAnimationUsingKeyFrames>
+										</Storyboard>
+									</VisualState>
+									<VisualState x:Name="InvalidFocused">
+										<Storyboard>
+											<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility" Storyboard.TargetName="Validation">
+												<DiscreteObjectKeyFrame KeyTime="0" Value="Visible"/>
+											</ObjectAnimationUsingKeyFrames>
+											<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="IsOpen" Storyboard.TargetName="ValidationToolTip">
+												<DiscreteObjectKeyFrame KeyTime="0">
+													<DiscreteObjectKeyFrame.Value>
+														<System:Boolean>True</System:Boolean>
+													</DiscreteObjectKeyFrame.Value>
+												</DiscreteObjectKeyFrame>
+											</ObjectAnimationUsingKeyFrames>
+										</Storyboard>
+									</VisualState>
+								</VisualStateGroup>
+								<VisualStateGroup x:Name="VisualRemoveStates">
+									<VisualState x:Name="NotRemoved"/>
+									<VisualState x:Name="Removed">
+										<Storyboard>
+											<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="grid">
+												<DiscreteObjectKeyFrame KeyTime="0">
+													<DiscreteObjectKeyFrame.Value>
+														<Visibility>Collapsed</Visibility>
+													</DiscreteObjectKeyFrame.Value>
+												</DiscreteObjectKeyFrame>
+											</ObjectAnimationUsingKeyFrames>
+											<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="btnDElete">
+												<DiscreteObjectKeyFrame KeyTime="0">
+													<DiscreteObjectKeyFrame.Value>
+														<Visibility>Collapsed</Visibility>
+													</DiscreteObjectKeyFrame.Value>
+												</DiscreteObjectKeyFrame>
+											</ObjectAnimationUsingKeyFrames>
+										</Storyboard>
+									</VisualState>
+								</VisualStateGroup>
+							</VisualStateManager.VisualStateGroups>
+							<ToggleButton x:Name="ExpanderButton" HorizontalAlignment="Stretch" IsTabStop="False" TabNavigation="Once" VerticalAlignment="Stretch">
+								<ToggleButton.Template>
+									<ControlTemplate TargetType="ToggleButton">
+										<Grid x:Name="Root" Background="Transparent">
+											<VisualStateManager.VisualStateGroups>
+												<VisualStateGroup x:Name="CommonStates">
+													<VisualState x:Name="Normal"/>
+													<VisualState x:Name="MouseOver">
+														<Storyboard>
+															<ColorAnimation Duration="0" To="#FF1BBBFA" Storyboard.TargetProperty="(Path.Stroke).Color" Storyboard.TargetName="UncheckedVisual"/>
+														</Storyboard>
+													</VisualState>
+													<VisualState x:Name="Disabled">
+														<Storyboard>
+															<DoubleAnimation Duration="0" To=".7" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="Root"/>
+														</Storyboard>
+													</VisualState>
+												</VisualStateGroup>
+												<VisualStateGroup x:Name="CheckStates">
+													<VisualState x:Name="Unchecked"/>
+													<VisualState x:Name="Checked">
+														<Storyboard>
+															<DoubleAnimation Duration="0" To="0" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="UncheckedVisual"/>
+															<DoubleAnimation Duration="0" To="1" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="CheckedVisual"/>
+														</Storyboard>
+													</VisualState>
+												</VisualStateGroup>
+											</VisualStateManager.VisualStateGroups>
+											<Grid HorizontalAlignment="Right" Margin="2 2 5 2">
+												<Path x:Name="UncheckedVisual" Data="M 0,0 L 0,9 L 5,4.5 Z" Fill="#FFFFFFFF" HorizontalAlignment="Right" Height="9" Stroke="#FF989898" StrokeThickness="1" StrokeLineJoin="Miter" VerticalAlignment="Center" Width="6"/>
+												<Path x:Name="CheckedVisual" Data="M 6,0 L 6,6 L 0,6 Z" Fill="#FF262626" HorizontalAlignment="Center" Height="6" Opacity="0" StrokeLineJoin="Miter" VerticalAlignment="Center" Width="6"/>
+											</Grid>
+										</Grid>
+									</ControlTemplate>
+								</ToggleButton.Template>
+							</ToggleButton>
+							<Rectangle x:Name="Selection" Grid.Column="1" IsHitTestVisible="False" Opacity="0" RadiusY="2" RadiusX="2" StrokeThickness="1">
+								<Rectangle.Fill>
+									<SolidColorBrush x:Name="SelectionFill" Color="#FFBADDE9"/>
+								</Rectangle.Fill>
+								<Rectangle.Stroke>
+									<SolidColorBrush x:Name="SelectionStroke" Color="#FF6DBDD1"/>
+								</Rectangle.Stroke>
+							</Rectangle>
+							<Button x:Name="Header" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Cursor="{TemplateBinding Cursor}" ClickMode="Hover" Grid.Column="1" Foreground="{TemplateBinding Foreground}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" IsTabStop="False" TabNavigation="Once" VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+								<Button.Template>
+									<ControlTemplate TargetType="Button">
+										<Grid Background="{TemplateBinding Background}">
+											<VisualStateManager.VisualStateGroups>
+												<VisualStateGroup x:Name="CommonStates">
+													<VisualState x:Name="Normal"/>
+													<VisualState x:Name="Pressed">
+														<Storyboard>
+															<DoubleAnimation Duration="0" To=".5" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="Hover"/>
+														</Storyboard>
+													</VisualState>
+													<VisualState x:Name="Disabled">
+														<Storyboard>
+															<DoubleAnimation Duration="0" To=".55" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="Content"/>
+														</Storyboard>
+													</VisualState>
+												</VisualStateGroup>
+											</VisualStateManager.VisualStateGroups>
+											<Rectangle x:Name="Hover" Fill="#FFBADDE9" IsHitTestVisible="False" Opacity="0" RadiusY="2" RadiusX="2" Stroke="#FF6DBDD1" StrokeThickness="1"/>
+											<ContentPresenter x:Name="Content" Cursor="{TemplateBinding Cursor}" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" HorizontalAlignment="Left" Margin="{TemplateBinding Padding}"/>
+										</Grid>
+									</ControlTemplate>
+								</Button.Template>
+								<ContentPresenter ContentTemplate="{TemplateBinding HeaderTemplate}" Content="{TemplateBinding Header}"/>
+							</Button>
+							<Border x:Name="Validation" BorderBrush="#FFDB000C" BorderThickness="{TemplateBinding BorderThickness}" Grid.Column="1" CornerRadius="2" Visibility="Collapsed">
+								<ToolTipService.ToolTip>
+									<ToolTip x:Name="ValidationToolTip" DataContext="{Binding RelativeSource={RelativeSource TemplatedParent}}" IsHitTestVisible="True" Placement="Right" PlacementTarget="{Binding ElementName=Header}" Template="{StaticResource CommonValidationToolTipTemplate}"/>
+								</ToolTipService.ToolTip>
+								<Grid Background="Transparent" HorizontalAlignment="Right" Height="10" Margin="0,-4,-4,0" VerticalAlignment="Top" Width="10">
+									<Path Data="M 1,0 L6,0 A 2,2 90 0 1 8,2 L8,7 Z" Fill="#FFDC000C" Margin="-1,3,0,0"/>
+									<Path Data="M 0,0 L2,0 L 8,6 L8,8" Fill="#FFFFFFFF" Margin="-1,3,0,0"/>
+								</Grid>
+							</Border>
+							<ItemsPresenter x:Name="ItemsHost" Grid.ColumnSpan="3" Grid.Column="1" Grid.Row="1" Visibility="Collapsed"/>
+							<StackPanel Grid.Column="3" Orientation="Horizontal" d:LayoutOverrides="Height">
+								<Button Content="+" Margin="0" Width="22" Height="22" d:LayoutOverrides="Height">
+									<i:Interaction.Triggers>
+										<i:EventTrigger EventName="Click">
+											<i:InvokeCommandAction
+												Command="{Binding AddFolderCommand, Source={StaticResource TreeVm}}"
+												CommandParameter="{Binding}" />
+										</i:EventTrigger>
+
+									</i:Interaction.Triggers>
+								</Button>
+								<Button x:Name="btnDElete" Content="-" Margin="2,0,0,0" Width="22" Height="22">
+									<i:Interaction.Triggers>
+										<i:EventTrigger EventName="Click">
+											<i:InvokeCommandAction
+												Command="{Binding DeleteFolderCommand, Source={StaticResource TreeVm}}"
+												CommandParameter="{Binding}" />
+										</i:EventTrigger>
+
+									</i:Interaction.Triggers>
+								</Button>
+							</StackPanel>
+						</Grid>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+		</Style>
+</sdk:Page.Resources>
+	<Grid x:Name="LayoutRoot" Background="{StaticResource JayWayDarkGreyBrush}">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="70" />
+			<RowDefinition />
+		</Grid.RowDefinitions>
+		<Grid x:Name="topGrid" Background="{StaticResource JayWayDarkGreyBrush}"  >
+			
+			<Rectangle x:Name="topBackground" Fill="Black" Opacity="0.215" />
+			<Image HorizontalAlignment="Left" Margin="8,3,0,0" Source="/JNotes;component/Assets/JaywayFish.png" Stretch="None" Width="67"/>
+			<TextBlock Margin="77,0,282,8" TextWrapping="Wrap" Text="JAYNOTES"  FontSize="48" FontFamily="Segoe UI" Foreground="{StaticResource JayWayBlueBrush}"/>
+			<Grid x:Name="gridAutoComplete" HorizontalAlignment="Right" Margin="0,0,25,11" Width="260" Height="30" VerticalAlignment="Bottom">
+				<Rectangle Fill="White" Stroke="Black" Grid.ColumnSpan="2"/>
+				<Button x:Name="btnSearch" HorizontalAlignment="Right" Height="32" Style="{StaticResource TransparentButton}" Width="32" Margin="0,0,3,0" Padding="0" Click="btnSearch_Click">
+					<Image Source="/JNotes;component/Icons/search.png" Stretch="None" Width="32" Height="32"/>
+				</Button>
+			</Grid>
+		</Grid>
+		<Grid x:Name="mainGrid"
+		      Grid.Row="1"
+		      Margin="12,0">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="300" />
+				<ColumnDefinition Width="5" />
+				<ColumnDefinition />
+			</Grid.ColumnDefinitions>
+			<sdk:TreeView x:Name="tv" DataContext="{Binding Source={StaticResource TreeVm}}" ItemsSource="{Binding TreeFolders}"
+			              BorderBrush="{x:Null}"
+			              BorderThickness="0" Margin="0,50,0,30" SelectedItemChanged="tv_SelectedItemChanged" ItemContainerStyle="{StaticResource TreeViewItemControlTemplate}" >
+				<i:Interaction.Triggers>
+					<i:EventTrigger EventName="SelectedItemChanged">
+					 <i:InvokeCommandAction Command="{Binding SelectedCommand, Mode=OneWay}"
+                                    CommandParameter="{Binding SelectedItem, ElementName=tv, Mode=OneWay}" />
+					</i:EventTrigger>
+				</i:Interaction.Triggers>
+				<sdk:TreeView.ItemTemplate>
+			
+			          
+			
+					<sdk:HierarchicalDataTemplate x:Name="tmp" ItemsSource="{Binding SubFolders}">
+										
+					 
+							
+						
+						<JNotes:TreeViewItemUC x:Name="treeViewItemUC">
+					
+						  <i:Interaction.Triggers>
+						<ei:DataTrigger Binding="{Binding Title}" Value="[~Removed]"  >
+						<ei:GoToStateAction StateName="Collapsed" />
+						</ei:DataTrigger>
+						</i:Interaction.Triggers>
+							
+							<VisualStateManager.VisualStateGroups>
+								<VisualStateGroup x:Name="TreewViewItemVisualStates">
+									<VisualState x:Name="Visible"/>
+									<VisualState x:Name="Collapsed">
+										<Storyboard>
+											<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="treeViewItemUC">
+												<DiscreteObjectKeyFrame KeyTime="0">
+													<DiscreteObjectKeyFrame.Value>
+														<Visibility>Collapsed</Visibility>
+													</DiscreteObjectKeyFrame.Value>
+												</DiscreteObjectKeyFrame>
+											</ObjectAnimationUsingKeyFrames>
+										</Storyboard>
+									</VisualState>
+								</VisualStateGroup>
+							</VisualStateManager.VisualStateGroups>
+							<VisualStateManager.CustomVisualStateManager>
+								<ei:ExtendedVisualStateManager/>
+							</VisualStateManager.CustomVisualStateManager>
+						
+						</JNotes:TreeViewItemUC> 
+						</sdk:HierarchicalDataTemplate>
+					</sdk:TreeView.ItemTemplate>
+			</sdk:TreeView>
+			<sdk:GridSplitter HorizontalAlignment="Stretch" Grid.Column="1" Background="#FF373737" Margin="0,51,0,30"/>
+			<StackPanel HorizontalAlignment="Left" Margin="12,9,0,0" Orientation="Horizontal" VerticalAlignment="Top" Height="30">
+				<Button x:Name="btnAddNode" Content="+ Node" Width="60">
+					<i:Interaction.Triggers>
+							<i:EventTrigger EventName="Click">
+							<i:InvokeCommandAction
+						        Command="{Binding Source={StaticResource TreeVm}, Path=AddFolderCommand}"
+								CommandParameter="{x:Null}" />
+							</i:EventTrigger>
+
+						</i:Interaction.Triggers>
+							</Button>
+			<!--	<Button x:Name="btnAddChilds" Content="+ Child" Width="60"  Margin="4,0,0,0" /> -->
+			<!--	<Button x:Name="btnRemoveNode" Content="Remove" Width="60" Margin="4,0,0,0" Click="btnRemoveNode_Click"/> -->
+			</StackPanel>
+			<TextBox x:Name="txtText" TextWrapping="Wrap" Grid.Column="2" Margin="0,50,0,30" AcceptsReturn="True" BorderBrush="{x:Null}" BorderThickness="0,1,0,0" Style="{StaticResource JayTextBoxStyle}"/>
+		</Grid>
+	</Grid>
+</sdk:Page>

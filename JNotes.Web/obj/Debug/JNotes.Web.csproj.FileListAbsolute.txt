@@ -1,0 +1,11 @@
+F:\Jayway_Projects\JNotes\JNotes.Web\bin\JNotes.Web.dll
+F:\Jayway_Projects\JNotes\JNotes.Web\bin\JNotes.Web.pdb
+F:\Jayway_Projects\JNotes\JNotes.Web\obj\Debug\ResolveAssemblyReference.cache
+F:\Jayway_Projects\JNotes\JNotes.Web\obj\Debug\JNotes.Web.Resources.ValidationErrorResources.resources
+F:\Jayway_Projects\JNotes\JNotes.Web\obj\Debug\JNotes.Web.Resources.RegistrationDataResources.resources
+F:\Jayway_Projects\JNotes\JNotes.Web\obj\Debug\GenerateResource.read.0.tlog
+F:\Jayway_Projects\JNotes\JNotes.Web\obj\Debug\GenerateResource.write.0.tlog
+F:\Jayway_Projects\JNotes\JNotes.Web\obj\Debug\JNotes.Web.dll
+F:\Jayway_Projects\JNotes\JNotes.Web\obj\Debug\JNotes.Web.pdb
+F:\Jayway_Projects\JNotes\JNotes.Web\obj\Debug\GenerateResource.read.1.tlog
+F:\Jayway_Projects\JNotes\JNotes.Web\obj\Debug\GenerateResource.write.1.tlog

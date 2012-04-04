@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="jTreeModelStoreContainer" CdmEntityContainer="jTreeEntities">
+    <EntitySetMapping Name="TreeData">
+      <EntityTypeMapping TypeName="jTreeModel.TreeData">
+        <MappingFragment StoreEntitySet="TreeData">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Parent" ColumnName="Parent" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="Text" ColumnName="Text" />
+          <ScalarProperty Name="Sortorder" ColumnName="Sortorder" />
+          <ScalarProperty Name="isExpanded" ColumnName="isExpanded" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
